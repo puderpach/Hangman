@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="Hangman.js"></script>
+    <link rel="stylesheet" type="text/css" href="Hangman.css">
+</head>
+
+<body>
+    <main>
+        <div id=game-window>
+            <div id=headline>
+                <h1>Paul's Hangman</h1>
+            </div>
+            <div id=game>
+                <div id=game-left>
+                    <div id=hangman>
+                    </div>
+                    <div class=description>
+                        The word
+                        <div class=description-box id=word>
+
+                        </div><br>
+                        Your used letters
+                        <div class=description-box id=used-letters>
+
+                        </div>
+                    </div>
+                </div>
+                <div id=game-right>
+                    <label>How many chances would you like?</label><br>
+                    <select id="chances">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="4">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="4">8</option>
+                        <option value="4">9</option>
+                    </select>
+                    <button onclick=startGame()>Start the game</button><br><br>
+                    <hr><br>
+                    <form>
+                        <label>Enter a letter:</label><br>
+                        <input type="text" id="letter-submitted" pattern="[A-Za-z]{1}" title="Enter one letter">
+                        <input type="submit" value="Submit">
+                    </form><br><br>
+                    <div id=messages>
+
+                    </div>
+                    <br>
+                    <hr><br>
+                    <button onclick=resetGame()>New game</button>
+                    <button onclick=addContent()></button>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>
