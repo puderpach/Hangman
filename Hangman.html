@@ -35,8 +35,8 @@
                     <hr><br>
 
                     <label for="letter-submitted">Enter a letter:</label><br>
-                    <input type="text" id="letter-submitted" pattern="[A-Za-z]{1}" title="Enter one letter">
-                    <button onclick=checkLetter()>Submit</button>
+                    <input type="text" id="letter-submitted" pattern="[A-Za-z]" maxlength = "1" title="Enter one letter">
+                    <button onclick=checkLetter() id="submit">Submit</button>
                     <br><br>
                     <div id=messages>
 

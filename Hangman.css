@@ -45,7 +45,8 @@ main {
     width: 315px;
     height: 30px;
     border: 1px black solid;
-    font-size: 25px;
+    font-size: 20px;
+    padding-top:3px;
 }
 
 #game-right {
@@ -53,6 +54,10 @@ main {
     padding-left: 25px;
     padding-top: 30px;
     padding-right: 25px;
+}
+
+#submit {
+    display: none;
 }
 
 #messages {

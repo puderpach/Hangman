@@ -19,12 +19,19 @@ let usedLetters = [];
 function startGame() {
     const chances = document.getElementById("chances").value;
     const word = selectWord();
-    clear("word-field")
+    clear("word-field");
+    clear("used-letters");
+    clear("messages");
+    usedLetters.length = 0;
+
+
     if (chances > 0) {
         changeHangman(chances);
         for (i = 0; i < word.length; i++) {
             addContent("word-field", "_ ");
         }
+        let showSubmit = document.getElementById("submit")
+        showSubmit.style.display = "inline";
     }
     else {
         clear("messages");
@@ -73,13 +80,27 @@ function addContent(id, message) {
 }
 
 function checkLetter() {
-    let letter = document.getElementById("letter-submitted");
+    let letter = document.getElementById("letter-submitted").value;
+    console.log(letter);
     if (usedLetters.includes(letter)) {
         clear("messages");
-        addContent("messages","This letter has been used before, please choose a new one");
-        console.log("yes")
+        addContent("messages", "This letter has been used before, please choose a new one");
+        console.log("Used letter")
     }
     else {
-        console.log("no");
+        usedLetters.push(letter);
+        console.log("New letter entered");
+        addContent("used-letters", letter + " ")
+    }
+}
+
+function addLetter(inputLetter) {
+    for (i = 0; i < word.length; i++) {
+        if (word[i] = inputLetter) {
+
+        }
+        else {
+
+        }
     }
 }
