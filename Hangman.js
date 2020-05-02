@@ -14,12 +14,38 @@
 // 2. Submit assignment as repo via Github (including Readme with explanation, proper folder structure etc.)
 // 3. Save progress after each coding session with a commit.
 
-let words = ["freedom", "xylophone", "trainstation", "combination", "deoxyribonucleic", "virologist", "accidentally", "gryffindor", "shipwreck", "plagiarism"]
 
-function addContent(text, element) {
-    let textBox = document.getElementById(element);
-    let addedText = document.createTextNode(text);
-    textBox.appendChild(addedText);
+function startGame() {
+    const hangman = document.getElementById("hangman");
+    const chances = document.getElementById("chances").value;
+    switch (chances) {
+        case "1": hangman.style.backgroundImage = "url('Images/hang8.jpg')";
+            break;
+        case "2": hangman.style.backgroundImage = "url('Images/hang7.jpg')";
+            break;
+        case "3": hangman.style.backgroundImage = "url('Images/hang6.jpg')";
+            break;
+        case "4": hangman.style.backgroundImage = "url('Images/hang5.jpg')";
+            break;
+        case "5": hangman.style.backgroundImage = "url('Images/hang4.jpg')";
+            break;
+        case "6": hangman.style.backgroundImage = "url('Images/hang3.jpg')";
+            break;
+        case "7": hangman.style.backgroundImage = "url('Images/hang2.jpg')";
+            break;
+        case "8": hangman.style.backgroundImage = "url('Images/hang1.jpg')";
+            break;
+    }
 }
 
-addContent("pen", "messages");
+function selectWord() {
+    let words = ["freedom", "xylophone", "trainstation", "combination", "deoxyribonucleic", "virologist", "accidentally", "gryffindor", "shipwreck", "plagiarism"];
+    let n = (Math.floor(Math.random() * 10) + 1);
+    let selectedWord = words[n - 1];
+    return selectedWord;
+}
+
+function addContent() {
+    let textBox = document.getElementById("messages");
+    textBox.innerHTML += "Button clicked version 2<br>";
+}

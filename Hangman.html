@@ -29,18 +29,8 @@
                     </div>
                 </div>
                 <div id=game-right>
-                    <label>How many chances would you like?</label><br>
-                    <select id="chances">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="4">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="4">8</option>
-                        <option value="4">9</option>
-                    </select>
+                    <label for="chances">How many chances would you like? </label><br>
+                    <input type="number" id="chances" max=8 min=1 name="chances">
                     <button onclick=startGame()>Start the game</button><br><br>
                     <hr><br>
                     <form>
@@ -54,7 +44,7 @@
                     <br>
                     <hr><br>
                     <button onclick=resetGame()>New game</button>
-                    <button onclick=addContent()></button>
+                    <button onclick=addContent()>Add Text</button>
                 </div>
             </div>
         </div>
