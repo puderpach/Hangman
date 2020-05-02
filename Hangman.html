@@ -19,7 +19,7 @@
                     </div>
                     <div class=description>
                         The word
-                        <div class=description-box id=word>
+                        <div class=description-box id=word-field>
 
                         </div><br>
                         Your used letters
@@ -33,18 +33,17 @@
                     <input type="number" id="chances" max=8 min=1 name="chances">
                     <button onclick=startGame()>Start the game</button><br><br>
                     <hr><br>
-                    <form>
-                        <label>Enter a letter:</label><br>
-                        <input type="text" id="letter-submitted" pattern="[A-Za-z]{1}" title="Enter one letter">
-                        <input type="submit" value="Submit">
-                    </form><br><br>
+
+                    <label for="letter-submitted">Enter a letter:</label><br>
+                    <input type="text" id="letter-submitted" pattern="[A-Za-z]{1}" title="Enter one letter">
+                    <button onclick=checkLetter()>Submit</button>
+                    <br><br>
                     <div id=messages>
 
                     </div>
                     <br>
                     <hr><br>
                     <button onclick=resetGame()>New game</button>
-                    <button onclick=addContent()>Add Text</button>
                 </div>
             </div>
         </div>

@@ -14,10 +14,26 @@
 // 2. Submit assignment as repo via Github (including Readme with explanation, proper folder structure etc.)
 // 3. Save progress after each coding session with a commit.
 
+let usedLetters = [];
 
 function startGame() {
-    const hangman = document.getElementById("hangman");
     const chances = document.getElementById("chances").value;
+    const word = selectWord();
+    clear("word-field")
+    if (chances > 0) {
+        changeHangman(chances);
+        for (i = 0; i < word.length; i++) {
+            addContent("word-field", "_ ");
+        }
+    }
+    else {
+        clear("messages");
+        addContent("messages", "Please choose a chance");
+    }
+}
+
+function changeHangman(chances) {
+    const hangman = document.getElementById("hangman");
     switch (chances) {
         case "1": hangman.style.backgroundImage = "url('Images/hang8.jpg')";
             break;
@@ -38,6 +54,12 @@ function startGame() {
     }
 }
 
+function clear(element) {
+    let elemClear = document.getElementById(element);
+    elemClear.innerHTML = "";
+    console.log(element + " has been cleared")
+}
+
 function selectWord() {
     let words = ["freedom", "xylophone", "trainstation", "combination", "deoxyribonucleic", "virologist", "accidentally", "gryffindor", "shipwreck", "plagiarism"];
     let n = (Math.floor(Math.random() * 10) + 1);
@@ -45,7 +67,19 @@ function selectWord() {
     return selectedWord;
 }
 
-function addContent() {
-    let textBox = document.getElementById("messages");
-    textBox.innerHTML += "Button clicked version 2<br>";
+function addContent(id, message) {
+    let textBox = document.getElementById(id);
+    textBox.innerHTML += message;
+}
+
+function checkLetter() {
+    let letter = document.getElementById("letter-submitted");
+    if (usedLetters.includes(letter)) {
+        clear("messages");
+        addContent("messages","This letter has been used before, please choose a new one");
+        console.log("yes")
+    }
+    else {
+        console.log("no");
+    }
 }
