@@ -27,9 +27,12 @@ function startGame() {
 
     if (chances > 0) {
         changeHangman(chances);
-        for (i = 0; i < word.length; i++) {
-            addContent("word-field", "_ ");
+        let wordUnderscore = word
+        for (let i = 0; i < wordUnderscore.length; i++) {
+           wordUnderscore.charAt[i]="_" 
         }
+        console.log(wordUnderscore);
+        addContent("word-field", wordUnderscore);
         let showSubmit = document.getElementById("submit")
         showSubmit.style.display = "inline";
     }
@@ -91,7 +94,18 @@ function checkLetter() {
         usedLetters.push(letter);
         console.log("New letter entered");
         addContent("used-letters", letter + " ")
+        containsLetter();
     }
+}
+
+function containsLetter() {
+    let letter = document.getElementById("letter-submitted").value;
+    if (word.includes(letter)) {
+        for (j=0;j < word.length; j++) {
+
+        }
+    }
+    
 }
 
 function addLetter(inputLetter) {
