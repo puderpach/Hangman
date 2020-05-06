@@ -27,9 +27,9 @@ function startGame() {
 
     if (chances > 0) {
         changeHangman(chances);
-        let wordUnderscore = word
-        for (let i = 0; i < wordUnderscore.length; i++) {
-           wordUnderscore.charAt[i]="_" 
+        const wordUnderscore = "";
+        for (let i = 0; i < word.length; i++) {
+            wordUnderscore.charAt[i] = "_"
         }
         console.log(wordUnderscore);
         addContent("word-field", wordUnderscore);
@@ -72,40 +72,50 @@ function clear(element) {
 
 function selectWord() {
     let words = ["freedom", "xylophone", "trainstation", "combination", "deoxyribonucleic", "virologist", "accidentally", "gryffindor", "shipwreck", "plagiarism"];
-    let n = (Math.floor(Math.random() * 10) + 1);
-    let selectedWord = words[n - 1];
+    let n = (Math.floor(Math.random() * 10));
+    let selectedWord = words[n];
     return selectedWord;
 }
 
 function addContent(id, message) {
     let textBox = document.getElementById(id);
-    textBox.innerHTML += message;
+    textBox.innerHTML = message;
+}
+
+function addLetterBox(id, message) {
+    let letterBox = document.getElementById(id);
+    letterBox.innerHTML += message;
 }
 
 function checkLetter() {
     let letter = document.getElementById("letter-submitted").value;
-    console.log(letter);
-    if (usedLetters.includes(letter)) {
-        clear("messages");
-        addContent("messages", "This letter has been used before, please choose a new one");
-        console.log("Used letter")
+    clear("messages");
+    if (letter.match(/([a-zA-Z])$/)) {
+        console.log(letter);
+        if (usedLetters.includes(letter)) {
+            clear("messages");
+            addContent("messages", "This letter has been used before, please choose a new one");
+            console.log("Used letter")
+        }
+        else {
+            usedLetters.push(letter);
+            console.log("New letter entered");
+            addLetterBox("used-letters", letter + " ")
+            containsLetter();
+        }
     }
     else {
-        usedLetters.push(letter);
-        console.log("New letter entered");
-        addContent("used-letters", letter + " ")
-        containsLetter();
+        addContent("messages", "Please enter a letter");
     }
 }
 
 function containsLetter() {
     let letter = document.getElementById("letter-submitted").value;
     if (word.includes(letter)) {
-        for (j=0;j < word.length; j++) {
-
+        for (j = 0; j < word.length; j++) {
         }
     }
-    
+
 }
 
 function addLetter(inputLetter) {
