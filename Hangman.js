@@ -15,10 +15,13 @@
 // 3. Save progress after each coding session with a commit.
 
 let usedLetters = [];
+let word = "";
+let letter = "";
+let wordUnderscore = "";
 
 function startGame() {
     const chances = document.getElementById("chances").value;
-    const word = selectWord();
+    word = selectWord();
     clear("word-field");
     clear("used-letters");
     clear("messages");
@@ -27,9 +30,9 @@ function startGame() {
 
     if (chances > 0) {
         changeHangman(chances);
-        const wordUnderscore = "";
+        wordUnderscore = "";
         for (let i = 0; i < word.length; i++) {
-            wordUnderscore.charAt[i] = "_"
+            wordUnderscore += "_";
         }
         console.log(wordUnderscore);
         addContent("word-field", wordUnderscore);
@@ -73,7 +76,7 @@ function clear(element) {
 function selectWord() {
     let words = ["freedom", "xylophone", "trainstation", "combination", "deoxyribonucleic", "virologist", "accidentally", "gryffindor", "shipwreck", "plagiarism"];
     let n = (Math.floor(Math.random() * 10));
-    let selectedWord = words[n];
+    let selectedWord = words[n].toUpperCase();
     return selectedWord;
 }
 
@@ -88,10 +91,10 @@ function addLetterBox(id, message) {
 }
 
 function checkLetter() {
-    let letter = document.getElementById("letter-submitted").value;
+    letter = document.getElementById("letter-submitted").value.toUpperCase();
     clear("messages");
-    if (letter.match(/([a-zA-Z])$/)) {
-        console.log(letter);
+    if (letter.match(/([A-Z])$/)) {
+        console.log(letter + " has been entered");
         if (usedLetters.includes(letter)) {
             clear("messages");
             addContent("messages", "This letter has been used before, please choose a new one");
@@ -100,7 +103,7 @@ function checkLetter() {
         else {
             usedLetters.push(letter);
             console.log("New letter entered");
-            addLetterBox("used-letters", letter + " ")
+            addLetterBox("used-letters", letter)
             containsLetter();
         }
     }
@@ -110,21 +113,19 @@ function checkLetter() {
 }
 
 function containsLetter() {
-    let letter = document.getElementById("letter-submitted").value;
-    if (word.includes(letter)) {
-        for (j = 0; j < word.length; j++) {
+    if (word.includes(letter) === true) {
+        console.log("test 1")
+        for (let i = 0; i < word.length; i++) {
+            console.log("here")
+            if (word[i] === letter) {
+                console.log("before");
+                replaceAt(wordUnderscore, i, letter)
+                console.log("after");
+            }
         }
     }
-
 }
 
-function addLetter(inputLetter) {
-    for (i = 0; i < word.length; i++) {
-        if (word[i] = inputLetter) {
-
-        }
-        else {
-
-        }
-    }
+function replaceAt(s, index, character) {
+    return s.substr(0, index) + character + s.substr(index + 1)
 }
