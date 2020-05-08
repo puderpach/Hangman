@@ -18,15 +18,16 @@ let usedLetters = [];
 let word = "";
 let letter = "";
 let wordUnderscore = "";
+let chances = null;
+let hangman = undefined;    
 
 function startGame() {
-    const chances = document.getElementById("chances").value;
+    chances = document.getElementById("chances").value;
     word = selectWord();
+    usedLetters.length = 0;
     clear("word-field");
     clear("used-letters");
     clear("messages");
-    usedLetters.length = 0;
-
 
     if (chances > 0) {
         changeHangman(chances);
@@ -46,7 +47,7 @@ function startGame() {
 }
 
 function changeHangman(chances) {
-    const hangman = document.getElementById("hangman");
+    hangman = document.getElementById("hangman");
     switch (chances) {
         case "1": hangman.style.backgroundImage = "url('Images/hang8.jpg')";
             break;
@@ -113,16 +114,20 @@ function checkLetter() {
 }
 
 function containsLetter() {
+    console.log(word);
     if (word.includes(letter) === true) {
-        console.log("test 1")
-        for (let i = 0; i < word.length; i++) {
-            console.log("here")
-            if (word[i] === letter) {
-                console.log("before");
-                replaceAt(wordUnderscore, i, letter)
-                console.log("after");
+        for (let j = 0; j < word.length; j++) {
+            if (word[j] === letter) {
+                wordUnderscore = replaceAt(wordUnderscore, j, letter)
+                addContent("messages", "The letter was part of the word, keep on going!");
+                addContent("word-field", wordUnderscore);
             }
         }
+    }
+    else {
+        addContent("messages", "What a pity. Keep on trying!");
+        chances--;
+        changeHangman(chances);
     }
 }
 
