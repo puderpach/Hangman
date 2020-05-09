@@ -46,21 +46,23 @@ function startGame() {
 function changeHangman(chances) {
     hangman = document.getElementById("hangman");
     switch (chances) {
-        case 1: hangman.style.backgroundImage = "url('Images/hang8.jpg')";
+        case 1: hangman.style.backgroundImage = "url('Images/hangman1.jpg')";
             break;
-        case 2: hangman.style.backgroundImage = "url('Images/hang7.jpg')";
+        case 2: hangman.style.backgroundImage = "url('Images/hangman2.jpg')";
             break;
-        case 3: hangman.style.backgroundImage = "url('Images/hang6.jpg')";
+        case 3: hangman.style.backgroundImage = "url('Images/hangman3.jpg')";
             break;
-        case 4: hangman.style.backgroundImage = "url('Images/hang5.jpg')";
+        case 4: hangman.style.backgroundImage = "url('Images/hangman4.jpg')";
             break;
-        case 5: hangman.style.backgroundImage = "url('Images/hang4.jpg')";
+        case 5: hangman.style.backgroundImage = "url('Images/hangman5.jpg')";
             break;
-        case 6: hangman.style.backgroundImage = "url('Images/hang3.jpg')";
+        case 6: hangman.style.backgroundImage = "url('Images/hangman6.jpg')";
             break;
-        case 7: hangman.style.backgroundImage = "url('Images/hang2.jpg')";
+        case 7: hangman.style.backgroundImage = "url('Images/hangman7.jpg')";
             break;
-        case 8: hangman.style.backgroundImage = "url('Images/hang1.jpg')";
+        case 8: hangman.style.backgroundImage = "url('Images/hangman8.jpg')";
+            break;
+        case 9: hangman.style.backgroundImage = "url('Images/hangman9.jpg')";
             break;
     }
 }
@@ -102,7 +104,7 @@ function containsLetter() {
         chances--;
         changeHangman(chances);
         if (chances === 0) {
-            addContent("messages", "You lost! Try again.");
+            addContent("messages", "You lost! The word was " + word + ". Try again.");
             let disappearSubmit = document.getElementById("submit")
             disappearSubmit.style.display = "none";
         }
@@ -110,8 +112,8 @@ function containsLetter() {
 }
 
 function selectWord() {
-    let words = ["freedom", "xylophone", "trainstation", "combination", "desoxyribonucleic", "virologist", "accidentally", "gryffindor", "shipwreck", "plagiarism"];
-    let n = (Math.floor(Math.random() * 10));
+    let words = ["Food", "freedom", "approach", "xylophone", "truck", "trainstation", "car", "combination", "desoxyribonucleic", "lifegoal", "warzone", "virologist", "accidentally", "heaven", "snowboarding", "gryffindor", "shipwreck", "beer", "plagiarism", "homeoffice"];
+    let n = (Math.floor(Math.random() * 20));
     let selectedWord = words[n].toUpperCase();
     return selectedWord;
 }
@@ -149,7 +151,7 @@ function resetGame() {
     document.getElementById("chances").value = "";
     document.getElementById("letter-submitted").value = "";
     clear("messages");
-    hangman.style.backgroundImage = "url('Images/hang_start.jpg')";
+    hangman.style.backgroundImage = "url('Images/hangman_start.jpg')";
     let disappearSubmit = document.getElementById("submit")
         disappearSubmit.style.display = "none";
 

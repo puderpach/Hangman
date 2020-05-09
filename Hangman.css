@@ -30,7 +30,7 @@ main {
     width: 100%;
     height: 350px;
     border-bottom: 1px lightgrey solid;
-    background-image: url(Images/hang_start.jpg);
+    background-image: url(Images/hangman_start.jpg);
     background-size: auto 100%;
     background-repeat: no-repeat;
     background-position: center;
