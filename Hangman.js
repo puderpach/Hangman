@@ -19,23 +19,20 @@ let word = "";
 let letter = "";
 let wordUnderscore = "";
 let chances = null;
-let hangman = undefined;    
+let hangman = undefined;
 
 function startGame() {
-    chances = document.getElementById("chances").value;
+    chances = document.getElementById("chances").valueAsNumber;
     word = selectWord();
     usedLetters.length = 0;
     clear("word-field");
     clear("used-letters");
     clear("messages");
-
     if (chances > 0) {
-        changeHangman(chances);
         wordUnderscore = "";
         for (let i = 0; i < word.length; i++) {
             wordUnderscore += "_";
         }
-        console.log(wordUnderscore);
         addContent("word-field", wordUnderscore);
         let showSubmit = document.getElementById("submit")
         showSubmit.style.display = "inline";
@@ -49,21 +46,21 @@ function startGame() {
 function changeHangman(chances) {
     hangman = document.getElementById("hangman");
     switch (chances) {
-        case "1": hangman.style.backgroundImage = "url('Images/hang8.jpg')";
+        case 1: hangman.style.backgroundImage = "url('Images/hang8.jpg')";
             break;
-        case "2": hangman.style.backgroundImage = "url('Images/hang7.jpg')";
+        case 2: hangman.style.backgroundImage = "url('Images/hang7.jpg')";
             break;
-        case "3": hangman.style.backgroundImage = "url('Images/hang6.jpg')";
+        case 3: hangman.style.backgroundImage = "url('Images/hang6.jpg')";
             break;
-        case "4": hangman.style.backgroundImage = "url('Images/hang5.jpg')";
+        case 4: hangman.style.backgroundImage = "url('Images/hang5.jpg')";
             break;
-        case "5": hangman.style.backgroundImage = "url('Images/hang4.jpg')";
+        case 5: hangman.style.backgroundImage = "url('Images/hang4.jpg')";
             break;
-        case "6": hangman.style.backgroundImage = "url('Images/hang3.jpg')";
+        case 6: hangman.style.backgroundImage = "url('Images/hang3.jpg')";
             break;
-        case "7": hangman.style.backgroundImage = "url('Images/hang2.jpg')";
+        case 7: hangman.style.backgroundImage = "url('Images/hang2.jpg')";
             break;
-        case "8": hangman.style.backgroundImage = "url('Images/hang1.jpg')";
+        case 8: hangman.style.backgroundImage = "url('Images/hang1.jpg')";
             break;
     }
 }
@@ -71,11 +68,10 @@ function changeHangman(chances) {
 function clear(element) {
     let elemClear = document.getElementById(element);
     elemClear.innerHTML = "";
-    console.log(element + " has been cleared")
 }
 
 function selectWord() {
-    let words = ["freedom", "xylophone", "trainstation", "combination", "deoxyribonucleic", "virologist", "accidentally", "gryffindor", "shipwreck", "plagiarism"];
+    let words = ["freedom", "xylophone", "trainstation", "combination", "desoxyribonucleic", "virologist", "accidentally", "gryffindor", "shipwreck", "plagiarism"];
     let n = (Math.floor(Math.random() * 10));
     let selectedWord = words[n].toUpperCase();
     return selectedWord;
@@ -103,7 +99,6 @@ function checkLetter() {
         }
         else {
             usedLetters.push(letter);
-            console.log("New letter entered");
             addLetterBox("used-letters", letter)
             containsLetter();
         }
@@ -114,13 +109,13 @@ function checkLetter() {
 }
 
 function containsLetter() {
-    console.log(word);
     if (word.includes(letter) === true) {
         for (let j = 0; j < word.length; j++) {
             if (word[j] === letter) {
                 wordUnderscore = replaceAt(wordUnderscore, j, letter)
-                addContent("messages", "The letter was part of the word, keep on going!");
+                addContent("messages", "Great, keep on going!");
                 addContent("word-field", wordUnderscore);
+                checkWin();
             }
         }
     }
@@ -128,9 +123,22 @@ function containsLetter() {
         addContent("messages", "What a pity. Keep on trying!");
         chances--;
         changeHangman(chances);
+        if (chances === 0) {
+            addContent("messages", "You lost! Try again.");
+            let disappearSubmit = document.getElementById("submit")
+            disappearSubmit.style.display = "none";
+        }
     }
 }
 
 function replaceAt(s, index, character) {
     return s.substr(0, index) + character + s.substr(index + 1)
+}
+
+function checkWin() {
+    if (wordUnderscore.includes("_") === false) {
+        addContent("messages", "You won! Congratulations");
+        let disappearSubmit = document.getElementById("submit")
+        disappearSubmit.style.display = "none";
+    }
 }
