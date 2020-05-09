@@ -65,28 +65,6 @@ function changeHangman(chances) {
     }
 }
 
-function clear(element) {
-    let elemClear = document.getElementById(element);
-    elemClear.innerHTML = "";
-}
-
-function selectWord() {
-    let words = ["freedom", "xylophone", "trainstation", "combination", "desoxyribonucleic", "virologist", "accidentally", "gryffindor", "shipwreck", "plagiarism"];
-    let n = (Math.floor(Math.random() * 10));
-    let selectedWord = words[n].toUpperCase();
-    return selectedWord;
-}
-
-function addContent(id, message) {
-    let textBox = document.getElementById(id);
-    textBox.innerHTML = message;
-}
-
-function addLetterBox(id, message) {
-    let letterBox = document.getElementById(id);
-    letterBox.innerHTML += message;
-}
-
 function checkLetter() {
     letter = document.getElementById("letter-submitted").value.toUpperCase();
     clear("messages");
@@ -131,8 +109,11 @@ function containsLetter() {
     }
 }
 
-function replaceAt(s, index, character) {
-    return s.substr(0, index) + character + s.substr(index + 1)
+function selectWord() {
+    let words = ["freedom", "xylophone", "trainstation", "combination", "desoxyribonucleic", "virologist", "accidentally", "gryffindor", "shipwreck", "plagiarism"];
+    let n = (Math.floor(Math.random() * 10));
+    let selectedWord = words[n].toUpperCase();
+    return selectedWord;
 }
 
 function checkWin() {
@@ -141,4 +122,35 @@ function checkWin() {
         let disappearSubmit = document.getElementById("submit")
         disappearSubmit.style.display = "none";
     }
+}
+
+function addContent(id, message) {
+    let textBox = document.getElementById(id);
+    textBox.innerHTML = message;
+}
+
+function addLetterBox(id, message) {
+    let letterBox = document.getElementById(id);
+    letterBox.innerHTML += message;
+}
+
+function replaceAt(s, index, character) {
+    return s.substr(0, index) + character + s.substr(index + 1)
+}
+
+function clear(element) {
+    let elemClear = document.getElementById(element);
+    elemClear.innerHTML = "";
+}
+
+function resetGame() {
+    clear("word-field");
+    clear("used-letters");
+    document.getElementById("chances").value = "";
+    document.getElementById("letter-submitted").value = "";
+    clear("messages");
+    hangman.style.backgroundImage = "url('Images/hang_start.jpg')";
+    let disappearSubmit = document.getElementById("submit")
+        disappearSubmit.style.display = "none";
+
 }
