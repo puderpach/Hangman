@@ -14,9 +14,11 @@
 // 2. Submit assignment as repo via Github (including Readme with explanation, proper folder structure etc.)
 // 3. Save progress after each coding session with a commit.
 let game;
-const startGame =  () => {
+function startGame() {
+    console.log('test')
     game = new Game();
-} 
+    game.startGame();
+}
 
 function checkLetter() {
     game.checkLetter();
@@ -31,10 +33,11 @@ class Game {
         this.chances = null;
         this.hangman = new Hangman;
     }
+
     startGame() {
-        chances = document.getElementById("chances").valueAsNumber;
-        word = selectWord();
-        usedLetters.length = 0;
+        this.chances = document.getElementById("chances").valueAsNumber;
+        this.word = selectWord();
+        this.usedLetters.length = 0;
         clear("word-field");
         clear("used-letters");
         clear("messages");
@@ -54,7 +57,7 @@ class Game {
     }
 
     checkLetter() {
-        letter = document.getElementById("letter-submitted").value.toUpperCase();
+        this.letter = document.getElementById("letter-submitted").value.toUpperCase();
         clear("messages");
         if (letter.match(/([A-Z])$/)) {
             console.log(letter + " has been entered");
@@ -78,7 +81,7 @@ class Game {
         if (word.includes(letter) === true) {
             for (let j = 0; j < word.length; j++) {
                 if (word[j] === letter) {
-                    wordUnderscore = replaceAt(wordUnderscore, j, letter)
+                    this.wordUnderscore = replaceAt(wordUnderscore, j, letter)
                     addContent("messages", "Great, keep on going!");
                     addContent("word-field", wordUnderscore);
                     checkWin();
@@ -98,58 +101,14 @@ class Game {
     }
 
     selectWord() {
-        let words = ["Food", "freedom", "approach", "xylophone", "truck", "trainstation", "car", "combination", "desoxyribonucleic", "lifegoal", "warzone", "virologist", "accidentally", "heaven", "snowboarding", "gryffindor", "shipwreck", "beer", "plagiarism", "homeoffice"];
-        let n = (Math.floor(Math.random() * 20));
-        let selectedWord = words[n].toUpperCase();
+        this.words = ["Food", "freedom", "approach", "xylophone", "truck", "trainstation", "car", "combination", "desoxyribonucleic", "lifegoal", "warzone", "virologist", "accidentally", "heaven", "snowboarding", "gryffindor", "shipwreck", "beer", "plagiarism", "homeoffice"];
+        this.n = (Math.floor(Math.random() * 20));
+        this.selectedWord = words[n].toUpperCase();
         return selectedWord;
     }
 
-    checkWin() {
-        if (wordUnderscore.includes("_") === false) {
-            addContent("messages", "You won! Congratulations");
-            let disappearSubmit = document.getElementById("submit")
-            disappearSubmit.style.display = "none";
-        }
-    }
-
-    addContent(id, message) {
-        let textBox = document.getElementById(id);
-        textBox.innerHTML = message;
-    }
-
-    addLetterBox(id, message) {
-        let letterBox = document.getElementById(id);
-        letterBox.innerHTML += message;
-    }
-
-    replaceAt(s, index, character) {
-        return s.substr(0, index) + character + s.substr(index + 1)
-    }
-
-    clear(element) {
-        let elemClear = document.getElementById(element);
-        elemClear.innerHTML = "";
-    }
-
-    resetGame() {
-        clear("word-field");
-        clear("used-letters");
-        document.getElementById("chances").value = "";
-        document.getElementById("letter-submitted").value = "";
-        clear("messages");
-        hangman.style.backgroundImage = "url('Images/hangman_start.jpg')";
-        let disappearSubmit = document.getElementById("submit")
-        disappearSubmit.style.display = "none";
-
-    }
-}
-
-class Hangman {
-    constructor(chances) {
-        this.chances = chances;
-    }
     changeHangman() {
-        hangman = document.getElementById("hangman");
+        this.hangman = document.getElementById("hangman");
         switch (chances) {
             case 1: hangman.style.backgroundImage = "url('Images/hangman1.jpg')";
                 break;
@@ -170,6 +129,44 @@ class Hangman {
             case 9: hangman.style.backgroundImage = "url('Images/hangman9.jpg')";
                 break;
         }
+
+    checkWin() {
+        if (wordUnderscore.includes("_") === false) {
+            addContent("messages", "You won! Congratulations");
+            this.disappearSubmit = document.getElementById("submit")
+            disappearSubmit.style.display = "none";
+        }
+    }
+
+    addContent(id, message) {
+        this.textBox = document.getElementById(id);
+        textBox.innerHTML = message;
+    }
+
+    addLetterBox(id, message) {
+        this.letterBox = document.getElementById(id);
+        letterBox.innerHTML += message;
+    }
+
+    replaceAt(s, index, character) {
+        return s.substr(0, index) + character + s.substr(index + 1)
+    }
+
+    clear(element) {
+        this.elemClear = document.getElementById(element);
+        elemClear.innerHTML = "";
+    }
+
+    resetGame() {
+        clear("word-field");
+        clear("used-letters");
+        document.getElementById("chances").value = "";
+        document.getElementById("letter-submitted").value = "";
+        clear("messages");
+        hangman.style.backgroundImage = "url('Images/hangman_start.jpg')";
+        this.disappearSubmit = document.getElementById("submit")
+        disappearSubmit.style.display = "none";
+
     }
 }
 
