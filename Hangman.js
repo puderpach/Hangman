@@ -14,8 +14,8 @@
 // 2. Submit assignment as repo via Github (including Readme with explanation, proper folder structure etc.)
 // 3. Save progress after each coding session with a commit.
 let game;
+
 function startGame() {
-    console.log('test')
     game = new Game();
     game.startGame();
 }
@@ -31,13 +31,14 @@ class Game {
         this.letter = "";
         this.wordUnderscore = "";
         this.chances = null;
-        this.hangman = new Hangman;
+        this.hangman = undefined;
     }
 
     startGame() {
         this.chances = document.getElementById("chances").valueAsNumber;
         this.word = selectWord();
         this.usedLetters.length = 0;
+        console.log(chances)
         clear("word-field");
         clear("used-letters");
         clear("messages");
@@ -47,7 +48,7 @@ class Game {
                 wordUnderscore += "_";
             }
             addContent("word-field", wordUnderscore);
-            let showSubmit = document.getElementById("submit")
+            this.showSubmit = document.getElementById("submit")
             showSubmit.style.display = "inline";
         }
         else {
@@ -94,7 +95,7 @@ class Game {
             changeHangman(chances);
             if (chances === 0) {
                 addContent("messages", "You lost! The word was " + word + ". Try again.");
-                let disappearSubmit = document.getElementById("submit")
+                this.disappearSubmit = document.getElementById("submit")
                 disappearSubmit.style.display = "none";
             }
         }
@@ -129,6 +130,7 @@ class Game {
             case 9: hangman.style.backgroundImage = "url('Images/hangman9.jpg')";
                 break;
         }
+    }
 
     checkWin() {
         if (wordUnderscore.includes("_") === false) {
@@ -166,7 +168,5 @@ class Game {
         hangman.style.backgroundImage = "url('Images/hangman_start.jpg')";
         this.disappearSubmit = document.getElementById("submit")
         disappearSubmit.style.display = "none";
-
     }
 }
-
