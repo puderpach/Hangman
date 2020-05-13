@@ -13,146 +13,163 @@
 // 1. Make it look nice! (Inspiration: image on the Wikipedia page
 // 2. Submit assignment as repo via Github (including Readme with explanation, proper folder structure etc.)
 // 3. Save progress after each coding session with a commit.
-
-let usedLetters = [];
-let word = "";
-let letter = "";
-let wordUnderscore = "";
-let chances = null;
-let hangman = undefined;
-
-function startGame() {
-    chances = document.getElementById("chances").valueAsNumber;
-    word = selectWord();
-    usedLetters.length = 0;
-    clear("word-field");
-    clear("used-letters");
-    clear("messages");
-    if (chances > 0) {
-        wordUnderscore = "";
-        for (let i = 0; i < word.length; i++) {
-            wordUnderscore += "_";
-        }
-        addContent("word-field", wordUnderscore);
-        let showSubmit = document.getElementById("submit")
-        showSubmit.style.display = "inline";
-    }
-    else {
-        clear("messages");
-        addContent("messages", "Please choose a chance");
-    }
-}
-
-function changeHangman(chances) {
-    hangman = document.getElementById("hangman");
-    switch (chances) {
-        case 1: hangman.style.backgroundImage = "url('Images/hangman1.jpg')";
-            break;
-        case 2: hangman.style.backgroundImage = "url('Images/hangman2.jpg')";
-            break;
-        case 3: hangman.style.backgroundImage = "url('Images/hangman3.jpg')";
-            break;
-        case 4: hangman.style.backgroundImage = "url('Images/hangman4.jpg')";
-            break;
-        case 5: hangman.style.backgroundImage = "url('Images/hangman5.jpg')";
-            break;
-        case 6: hangman.style.backgroundImage = "url('Images/hangman6.jpg')";
-            break;
-        case 7: hangman.style.backgroundImage = "url('Images/hangman7.jpg')";
-            break;
-        case 8: hangman.style.backgroundImage = "url('Images/hangman8.jpg')";
-            break;
-        case 9: hangman.style.backgroundImage = "url('Images/hangman9.jpg')";
-            break;
-    }
-}
+let game;
+const startGame =  () => {
+    game = new Game();
+} 
 
 function checkLetter() {
-    letter = document.getElementById("letter-submitted").value.toUpperCase();
-    clear("messages");
-    if (letter.match(/([A-Z])$/)) {
-        console.log(letter + " has been entered");
-        if (usedLetters.includes(letter)) {
-            clear("messages");
-            addContent("messages", "This letter has been used before, please choose a new one");
-            console.log("Used letter")
-        }
-        else {
-            usedLetters.push(letter);
-            addLetterBox("used-letters", letter)
-            containsLetter();
-        }
-    }
-    else {
-        addContent("messages", "Please enter a letter");
-    }
+    game.checkLetter();
 }
 
-function containsLetter() {
-    if (word.includes(letter) === true) {
-        for (let j = 0; j < word.length; j++) {
-            if (word[j] === letter) {
-                wordUnderscore = replaceAt(wordUnderscore, j, letter)
-                addContent("messages", "Great, keep on going!");
-                addContent("word-field", wordUnderscore);
-                checkWin();
+class Game {
+    constructor() {
+        this.usedLetters = [];
+        this.word = "";
+        this.letter = "";
+        this.wordUnderscore = "";
+        this.chances = null;
+        this.hangman = new Hangman;
+    }
+    startGame() {
+        chances = document.getElementById("chances").valueAsNumber;
+        word = selectWord();
+        usedLetters.length = 0;
+        clear("word-field");
+        clear("used-letters");
+        clear("messages");
+        if (chances > 0) {
+            wordUnderscore = "";
+            for (let i = 0; i < word.length; i++) {
+                wordUnderscore += "_";
+            }
+            addContent("word-field", wordUnderscore);
+            let showSubmit = document.getElementById("submit")
+            showSubmit.style.display = "inline";
+        }
+        else {
+            clear("messages");
+            addContent("messages", "Please choose a chance");
+        }
+    }
+
+    checkLetter() {
+        letter = document.getElementById("letter-submitted").value.toUpperCase();
+        clear("messages");
+        if (letter.match(/([A-Z])$/)) {
+            console.log(letter + " has been entered");
+            if (usedLetters.includes(letter)) {
+                clear("messages");
+                addContent("messages", "This letter has been used before, please choose a new one");
+                console.log("Used letter")
+            }
+            else {
+                usedLetters.push(letter);
+                addLetterBox("used-letters", letter)
+                containsLetter();
+            }
+        }
+        else {
+            addContent("messages", "Please enter a letter");
+        }
+    }
+
+    containsLetter() {
+        if (word.includes(letter) === true) {
+            for (let j = 0; j < word.length; j++) {
+                if (word[j] === letter) {
+                    wordUnderscore = replaceAt(wordUnderscore, j, letter)
+                    addContent("messages", "Great, keep on going!");
+                    addContent("word-field", wordUnderscore);
+                    checkWin();
+                }
+            }
+        }
+        else {
+            addContent("messages", "What a pity. Keep on trying!");
+            chances--;
+            changeHangman(chances);
+            if (chances === 0) {
+                addContent("messages", "You lost! The word was " + word + ". Try again.");
+                let disappearSubmit = document.getElementById("submit")
+                disappearSubmit.style.display = "none";
             }
         }
     }
-    else {
-        addContent("messages", "What a pity. Keep on trying!");
-        chances--;
-        changeHangman(chances);
-        if (chances === 0) {
-            addContent("messages", "You lost! The word was " + word + ". Try again.");
+
+    selectWord() {
+        let words = ["Food", "freedom", "approach", "xylophone", "truck", "trainstation", "car", "combination", "desoxyribonucleic", "lifegoal", "warzone", "virologist", "accidentally", "heaven", "snowboarding", "gryffindor", "shipwreck", "beer", "plagiarism", "homeoffice"];
+        let n = (Math.floor(Math.random() * 20));
+        let selectedWord = words[n].toUpperCase();
+        return selectedWord;
+    }
+
+    checkWin() {
+        if (wordUnderscore.includes("_") === false) {
+            addContent("messages", "You won! Congratulations");
             let disappearSubmit = document.getElementById("submit")
             disappearSubmit.style.display = "none";
         }
     }
-}
 
-function selectWord() {
-    let words = ["Food", "freedom", "approach", "xylophone", "truck", "trainstation", "car", "combination", "desoxyribonucleic", "lifegoal", "warzone", "virologist", "accidentally", "heaven", "snowboarding", "gryffindor", "shipwreck", "beer", "plagiarism", "homeoffice"];
-    let n = (Math.floor(Math.random() * 20));
-    let selectedWord = words[n].toUpperCase();
-    return selectedWord;
-}
+    addContent(id, message) {
+        let textBox = document.getElementById(id);
+        textBox.innerHTML = message;
+    }
 
-function checkWin() {
-    if (wordUnderscore.includes("_") === false) {
-        addContent("messages", "You won! Congratulations");
+    addLetterBox(id, message) {
+        let letterBox = document.getElementById(id);
+        letterBox.innerHTML += message;
+    }
+
+    replaceAt(s, index, character) {
+        return s.substr(0, index) + character + s.substr(index + 1)
+    }
+
+    clear(element) {
+        let elemClear = document.getElementById(element);
+        elemClear.innerHTML = "";
+    }
+
+    resetGame() {
+        clear("word-field");
+        clear("used-letters");
+        document.getElementById("chances").value = "";
+        document.getElementById("letter-submitted").value = "";
+        clear("messages");
+        hangman.style.backgroundImage = "url('Images/hangman_start.jpg')";
         let disappearSubmit = document.getElementById("submit")
         disappearSubmit.style.display = "none";
+
     }
 }
 
-function addContent(id, message) {
-    let textBox = document.getElementById(id);
-    textBox.innerHTML = message;
+class Hangman {
+    constructor(chances) {
+        this.chances = chances;
+    }
+    changeHangman() {
+        hangman = document.getElementById("hangman");
+        switch (chances) {
+            case 1: hangman.style.backgroundImage = "url('Images/hangman1.jpg')";
+                break;
+            case 2: hangman.style.backgroundImage = "url('Images/hangman2.jpg')";
+                break;
+            case 3: hangman.style.backgroundImage = "url('Images/hangman3.jpg')";
+                break;
+            case 4: hangman.style.backgroundImage = "url('Images/hangman4.jpg')";
+                break;
+            case 5: hangman.style.backgroundImage = "url('Images/hangman5.jpg')";
+                break;
+            case 6: hangman.style.backgroundImage = "url('Images/hangman6.jpg')";
+                break;
+            case 7: hangman.style.backgroundImage = "url('Images/hangman7.jpg')";
+                break;
+            case 8: hangman.style.backgroundImage = "url('Images/hangman8.jpg')";
+                break;
+            case 9: hangman.style.backgroundImage = "url('Images/hangman9.jpg')";
+                break;
+        }
+    }
 }
 
-function addLetterBox(id, message) {
-    let letterBox = document.getElementById(id);
-    letterBox.innerHTML += message;
-}
-
-function replaceAt(s, index, character) {
-    return s.substr(0, index) + character + s.substr(index + 1)
-}
-
-function clear(element) {
-    let elemClear = document.getElementById(element);
-    elemClear.innerHTML = "";
-}
-
-function resetGame() {
-    clear("word-field");
-    clear("used-letters");
-    document.getElementById("chances").value = "";
-    document.getElementById("letter-submitted").value = "";
-    clear("messages");
-    hangman.style.backgroundImage = "url('Images/hangman_start.jpg')";
-    let disappearSubmit = document.getElementById("submit")
-        disappearSubmit.style.display = "none";
-
-}
