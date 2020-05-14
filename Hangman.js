@@ -24,6 +24,10 @@ function checkLetter() {
     game.checkLetter();
 }
 
+function resetGame() {
+    game.resetGame();
+}
+
 class Game {
     constructor() {
         this.usedLetters = [];
@@ -36,67 +40,67 @@ class Game {
 
     startGame() {
         this.chances = document.getElementById("chances").valueAsNumber;
-        this.word = selectWord();
+        this.word = this.selectWord();
         this.usedLetters.length = 0;
-        console.log(chances)
-        clear("word-field");
-        clear("used-letters");
-        clear("messages");
-        if (chances > 0) {
-            wordUnderscore = "";
-            for (let i = 0; i < word.length; i++) {
-                wordUnderscore += "_";
+        console.log(this.chances)
+        this.clear("word-field");
+        this.clear("used-letters");
+        this.clear("messages");
+        if (this.chances > 0) {
+            this.wordUnderscore = "";
+            for (let i = 0; i < this.word.length; i++) {
+                this.wordUnderscore += "_";
             }
-            addContent("word-field", wordUnderscore);
+            this.addContent("word-field", this.wordUnderscore);
             this.showSubmit = document.getElementById("submit")
-            showSubmit.style.display = "inline";
+            this.showSubmit.style.display = "inline";
         }
         else {
-            clear("messages");
-            addContent("messages", "Please choose a chance");
+            this.clear("messages");
+            this.addContent("messages", "Please choose a chance");
         }
     }
 
     checkLetter() {
         this.letter = document.getElementById("letter-submitted").value.toUpperCase();
-        clear("messages");
-        if (letter.match(/([A-Z])$/)) {
-            console.log(letter + " has been entered");
-            if (usedLetters.includes(letter)) {
-                clear("messages");
-                addContent("messages", "This letter has been used before, please choose a new one");
+        this.clear("messages");
+        if (this.letter.match(/([A-Z])$/)) {
+            console.log(this.letter + " has been entered");
+            if (this.usedLetters.includes(this.letter)) {
+                this.clear("messages");
+                this.addContent("messages", "This letter has been used before, please choose a new one");
                 console.log("Used letter")
             }
             else {
-                usedLetters.push(letter);
-                addLetterBox("used-letters", letter)
-                containsLetter();
+                this.usedLetters.push(this.letter);
+                this.addLetterBox("used-letters", this.letter)
+                this.containsLetter();
             }
         }
         else {
-            addContent("messages", "Please enter a letter");
+            this.addContent("messages", "Please enter a letter");
         }
     }
 
     containsLetter() {
-        if (word.includes(letter) === true) {
-            for (let j = 0; j < word.length; j++) {
-                if (word[j] === letter) {
-                    this.wordUnderscore = replaceAt(wordUnderscore, j, letter)
-                    addContent("messages", "Great, keep on going!");
-                    addContent("word-field", wordUnderscore);
-                    checkWin();
+        if (this.word.includes(this.letter) === true) {
+            for (let j = 0; j < this.word.length; j++) {
+                if (this.word[j] === this.letter) {
+                    this.wordUnderscore = this.replaceAt(this.wordUnderscore, j, this.letter)
+                    this.addContent("messages", "Great, keep on going!");
+                    this.addContent("word-field", this.wordUnderscore);
+                    this.checkWin();
                 }
             }
         }
         else {
-            addContent("messages", "What a pity. Keep on trying!");
-            chances--;
-            changeHangman(chances);
-            if (chances === 0) {
-                addContent("messages", "You lost! The word was " + word + ". Try again.");
+            this.addContent("messages", "What a pity. Keep on trying!");
+            this.chances--;
+            this.changeHangman(this.chances);
+            if (this.chances === 0) {
+                this.addContent("messages", "You lost! The word was " + this.word + ". Try again.");
                 this.disappearSubmit = document.getElementById("submit")
-                disappearSubmit.style.display = "none";
+                this.disappearSubmit.style.display = "none";
             }
         }
     }
@@ -104,13 +108,13 @@ class Game {
     selectWord() {
         this.words = ["Food", "freedom", "approach", "xylophone", "truck", "trainstation", "car", "combination", "desoxyribonucleic", "lifegoal", "warzone", "virologist", "accidentally", "heaven", "snowboarding", "gryffindor", "shipwreck", "beer", "plagiarism", "homeoffice"];
         this.n = (Math.floor(Math.random() * 20));
-        this.selectedWord = words[n].toUpperCase();
-        return selectedWord;
+        this.selectedWord = this.words[this.n].toUpperCase();
+        return this.selectedWord;
     }
 
     changeHangman() {
         this.hangman = document.getElementById("hangman");
-        switch (chances) {
+        switch (this.chances) {
             case 1: hangman.style.backgroundImage = "url('Images/hangman1.jpg')";
                 break;
             case 2: hangman.style.backgroundImage = "url('Images/hangman2.jpg')";
@@ -133,21 +137,21 @@ class Game {
     }
 
     checkWin() {
-        if (wordUnderscore.includes("_") === false) {
-            addContent("messages", "You won! Congratulations");
+        if (this.wordUnderscore.includes("_") === false) {
+            this.addContent("messages", "You won! Congratulations");
             this.disappearSubmit = document.getElementById("submit")
-            disappearSubmit.style.display = "none";
+            this.disappearSubmit.style.display = "none";
         }
     }
 
     addContent(id, message) {
         this.textBox = document.getElementById(id);
-        textBox.innerHTML = message;
+        this.textBox.innerHTML = message;
     }
 
     addLetterBox(id, message) {
         this.letterBox = document.getElementById(id);
-        letterBox.innerHTML += message;
+        this.letterBox.innerHTML += message;
     }
 
     replaceAt(s, index, character) {
@@ -156,17 +160,17 @@ class Game {
 
     clear(element) {
         this.elemClear = document.getElementById(element);
-        elemClear.innerHTML = "";
+        this.elemClear.innerHTML = "";
     }
 
     resetGame() {
-        clear("word-field");
-        clear("used-letters");
+        this.clear("word-field");
+        this.clear("used-letters");
         document.getElementById("chances").value = "";
         document.getElementById("letter-submitted").value = "";
-        clear("messages");
-        hangman.style.backgroundImage = "url('Images/hangman_start.jpg')";
+        this.clear("messages");
+        this.hangman.style.backgroundImage = "url('Images/hangman_start.jpg')";
         this.disappearSubmit = document.getElementById("submit")
-        disappearSubmit.style.display = "none";
+        this.disappearSubmit.style.display = "none";
     }
 }
