@@ -28,6 +28,11 @@ function resetGame() {
     game.resetGame();
 }
 
+function testHangman() {
+    let testgame = new Game();
+    testgame.testHangman();
+}
+
 class Game {
     constructor() {
         this.usedLetters = [];
@@ -35,17 +40,17 @@ class Game {
         this.letter = "";
         this.wordUnderscore = "";
         this.chances = null;
-        this.hangman = undefined;
+        this.hangman = document.getElementById("hangman");
     }
 
     startGame() {
         this.chances = document.getElementById("chances").valueAsNumber;
         this.word = this.selectWord();
         this.usedLetters.length = 0;
-        console.log(this.chances)
         this.clear("word-field");
         this.clear("used-letters");
         this.clear("messages");
+        this.hangman.style.backgroundImage = "url('Images/hangman_start.jpg')";
         if (this.chances > 0) {
             this.wordUnderscore = "";
             for (let i = 0; i < this.word.length; i++) {
@@ -113,7 +118,6 @@ class Game {
     }
 
     changeHangman() {
-        this.hangman = document.getElementById("hangman");
         switch (this.chances) {
             case 1: hangman.style.backgroundImage = "url('Images/hangman1.jpg')";
                 break;
@@ -173,4 +177,42 @@ class Game {
         this.disappearSubmit = document.getElementById("submit")
         this.disappearSubmit.style.display = "none";
     }
+
+    testHangman() {
+        //Test 1: Winning the game?
+        this.wordUnderscore = "Halloween";
+        this.checkWin();
+        console.log(document.getElementById("messages").innerHTML)
+        if (document.getElementById("messages").innerHTML === "You won! Congratulations") {
+            console.log("Test 1 was successful");
+        }
+        else {
+            console.log("Test 1 failed");
+        }
+
+        //Test 2: Does the Hangman picture change according to chances?
+        this.chances = 3;
+        this.changeHangman();
+        if (document.getElementById("hangman").style.backgroundImage === 'url("Images/hangman3.jpg")') {
+            console.log("Test 2 was successful");
+        }
+        else {
+            console.log("Test 2 failed");
+        }
+
+        // Test 3: Is it a word?
+        this.testWord = this.selectWord();
+        if (typeof this.testWord === "string") {
+            console.log("Test 3 was successful");
+        }
+        else {
+            console.log("Test 3 failed")
+        }
+
+        // Test 4: Double letters
+        
+    }
+
+    
 }
+
