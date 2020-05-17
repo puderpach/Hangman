@@ -209,10 +209,26 @@ class Game {
             console.log("Test 3 failed")
         }
 
-        // Test 4: Double letters
-        
-    }
+        // Test 4: Is the letter a part of the word?
+        this.letter = "Z";
+        this.word = "TESTEDASSPIEL"
+        this.chances = 5;
+        this.containsLetter();
+        if (this.chances === 4) {
+            console.log("Test 4 was successful")
+        }
+        else {
+            console.log("Test 4 failed");
+        }
 
-    
+        // Test 5: Was a letter entered?
+        this.checkLetter();
+        if (document.getElementById("messages").innerHTML === "Please enter a letter") {
+            console.log("Test 5 was successful");
+        }
+        else {
+            console.log("Test 5 failed");
+        }
+    }
 }
 
